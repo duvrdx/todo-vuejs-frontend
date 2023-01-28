@@ -15,8 +15,7 @@
 
     <div v-show="todos.length > 0" class="todosHolder">
         <div class="todoCard" v-for="(item, index) in todos" :key="index">
-            <TodoCard @change-state="changeState(index)" :title="item.title" :content="item.content" :state="item.state"/>
-
+            <TodoCard @change-state="changeState(item.id, item.title, item.content, item.state)" :title="item.title" :content="item.content" :state="item.state"/>
             <button @click="delTodo(item.id)">Delete</button>
         </div>
     </div>
@@ -24,6 +23,8 @@
 
 <script>
 import TodoCard from "./TodoCard.vue"
+import api from "../services/api.js"
+
 export default{
     name: "Todo",
     components: {
@@ -34,35 +35,77 @@ export default{
             title: "",
             content: "",
             state: false,
-            todos: [
-            ]
+            todos: []
         }
     },
     methods:{
         addNewTodo(e){
             e.preventDefault()
-
-            this.todos.push(
-                {
-                    title: this.title,
-                    content: this.content,
-                    state: this.state 
+            if(this.title === ""){
+                const a = confirm("Title is empty")
+                if(a){
+                    this.title = " "
+                }else{
+                    this.title = prompt("Insert a title:")
                 }
-            )
+            }
 
-            this.title = ""
-            this.content = ""
-            this.state = false
+            if(this.content === ""){
+                const b = confirm("Content is empty")
+                if(b){
+                    this.content = " "
+                }else{
+                    this.content = prompt("Insert a content:")
+                }
+            }
+
+            api.post("todo/add/" + this.title + "/" + this.content + "/" + this.state).then(() => {
+                api.get().then((response) => {
+                const todos = response["data"]
+                this.todos = []
+                for(const item in todos){
+                    api.get("todo/read/"+todos[item]).then((response) => {
+                        this.todos.push(response["data"])
+                    })
+                };})
+            })
         },
 
         delTodo(id){
-            this.todos.splice(id,1)
+            api.get("todo/delete/" + id).then(() =>{
+                api.get().then((response) => {
+                const todos = response["data"]
+                this.todos = []
+                for(const item in todos){
+                    api.get("todo/read/"+todos[item]).then((response) => {
+                        this.todos.push(response["data"])
+                    })
+                };})
+            })
         },
 
-        changeState(id){
-            this.todos[id].state = !this.todos[id].state
-            console.log(this.todos[id].state, id)
+        changeState(id, title, content, state){
+            api.post("todo/update/" + id + "/" + title + "/" + content + "/" + !state).then(()=>{
+                api.get().then((response) => {
+                const todos = response["data"]
+                this.todos = []
+                for(const item in todos){
+                    api.get("todo/read/"+todos[item]).then((response) => {
+                        this.todos.push(response["data"])
+                    })
+                };})
+            })
         }
+
+    },created(){
+        api.get().then((response) => {
+                const todos = response["data"]
+                this.todos = []
+                for(const item in todos){
+                    api.get("todo/read/"+todos[item]).then((response) => {
+                        this.todos.push(response["data"])
+                    })
+                };})
     }
 }
 </script>

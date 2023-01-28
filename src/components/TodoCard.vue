@@ -1,8 +1,8 @@
 <template>
     <div>
         <span> {{ title }} </span><br>
-        <button v-if="state" @click="$emit('change-state')"> Completed </button>
-        <button v-else @click="$emit('change-state')"> Not Completed </button>
+        <button v-if="state" @click="$emit('change-state')"> C </button>
+        <button v-else @click="$emit('change-state')"> N </button>
         <p>{{ content }}</p>
     </div>
 </template>
