@@ -1,8 +1,10 @@
 <template>
     <div>
-        <span> {{ title }} </span><br>
-        <button v-if="state" @click="$emit('change-state')"> C </button>
-        <button v-else @click="$emit('change-state')"> N </button>
+        <span> {{ title }} </span>
+        <button class="btn btn-success" v-if="state" @click="$emit('change-state')"
+        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;"> Done </button>
+        <button class="btn btn-danger btn-sm" v-else @click="$emit('change-state')"
+        style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .65rem;"> To Do </button>
         <p>{{ content }}</p>
     </div>
 </template>
@@ -22,3 +24,17 @@
         }       
     }
 </script>
+
+<style scoped>
+    span{
+        color: white;
+        margin-right: .5rem;
+        font-weight: bold;
+    }
+
+    p{
+        color: white;
+        font-size: smaller;
+        margin-top: .7rem;
+    }
+</style>

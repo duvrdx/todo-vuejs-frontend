@@ -1,22 +1,33 @@
 <template>
     <div class="formHolder">
         <form action="">
-            <label for="title">Title</label><br>
-            <input type="text" name="title" v-model="title"><br>
-            <label for="title">Description</label><br>
-            <input type="text" name="content" v-model="content"><br>
-            <label for="title">Completed?</label>
-            <input id="form-checkbox" type="checkbox" name="state" v-model="state"><br>
+            <div class="mb-3">
+                <label class="form-label" for="title">Title</label>
+                <input type="text" class="form-control" name="title" v-model="title" placeholder="Drink some water...">
+            </div>
 
-            <button type="submit" @click="addNewTodo">Add</button>
+            <div class="mb-3">
+                <label class="form-label" for="content">Content</label>
+                <input type="text" class="form-control" name="content" v-model="content" placeholder="5 liters in the morning...">
+            </div>
+            
+            <div class="mb-3">
+                <label class="form-check-label" for="title">Completed?</label>
+                <input class="form-check-input" id="form-checkbox" type="checkbox" name="state" v-model="state"><br>
+            </div>
+
+            <button class="btn btn-outline-success" type="submit" @click="addNewTodo">Add</button>
         </form>
 
     </div>
 
     <div v-show="todos.length > 0" class="todosHolder">
         <div class="todoCard" v-for="(item, index) in todos" :key="index">
+            <div class="close-btn">
+                <button class="btn btn-outline-light btn-sm" @click="delTodo(item.id)"
+                style="--bs-btn-padding-y: .15rem; --bs-btn-padding-x: .3rem; --bs-btn-font-size: .60rem; margin-top: .7rem; float: right; right: 0;">X</button>
+            </div>
             <TodoCard @change-state="changeState(item.id, item.title, item.content, item.state)" :title="item.title" :content="item.content" :state="item.state"/>
-            <button @click="delTodo(item.id)">Delete</button>
         </div>
     </div>
 </template>
@@ -120,11 +131,7 @@ export default{
     height: 100%;
     border-radius: 10px;
     background-color: white;
-    padding: .5rem;
-}
-
-label, input{
-    margin: .7rem 0 ;
+    padding: 1rem 0;
 }
 
 label{
@@ -133,10 +140,6 @@ label{
 
 #form-checkbox{
     margin-left: .7rem;
-}
-
-button {
-    margin-top: 1rem;
 }
 
 .todosHolder{
@@ -154,8 +157,18 @@ button {
     align-items: center;
     width: 100%;
     border-radius: 10px;
-    background-color: grey;
+    background-color: #01261F;
     margin-top: 1rem;
-    padding: .5rem;
+    padding: 0 .5rem 0 .5rem;
 }
+
+.close-btn{
+    width: 100%;
+    padding: 0;
+}
+
+.close-btn button{
+    margin-left: 70%;
+}
+
 </style>

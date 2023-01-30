@@ -1,5 +1,8 @@
 <template>
   <div class="holder">
+    <div class="imageHolder">
+      <img src="./assets/title.png" alt="Minha Figura">
+    </div>
     <Todo />
   </div>
 </template>

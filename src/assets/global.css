@@ -2,18 +2,20 @@ html{
     padding: 0;
     margin: 0;
     box-sizing: border-box;
+    word-break: break-all;
 
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+    background-color: #88BFB5;
 }
 
 
 .holder{
-    background-color: #d9d9d9;
-    width: 25rem;
+    background-color: #88BFB5;
+    width: 35rem;
 
     display: flex;
     flex-direction: column;
@@ -22,4 +24,24 @@ html{
 
     height: auto;
     padding: 1rem;
+}
+
+.imageHolder{
+    background-color: white;
+    width: 70%;
+    margin-bottom: 1rem;
+    border-radius: 10px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    height: auto;
+    padding: 1rem;
+}
+
+.imageHolder img{
+    width: 90%;
+    height: auto;
 }
